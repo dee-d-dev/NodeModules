@@ -83,10 +83,19 @@ const fs = require("fs");
 //   }
 // });
 
-const readStream = fs.createReadStream("./example.txt", "utf8");
-const writeStream = fs.createWriteStream("example2.txt");
-readStream.on("data", (chunk) => {
-  writeStream.write(chunk);
-});
+// const readStream = fs.createReadStream("./example.txt", "utf8");
+// const writeStream = fs.createWriteStream("example3.txt.gz");
+const zlib = require('zlib')
+// const gzip = zlib.createGzip() //used to compress
+// readStream.on("data", (chunk) => {
+//   writeStream.write(chunk);
+// });
+// readStream.pipe(gzip).pipe(writeStream)
 
-//readtsream uses a small buffer and this makes better than a readFile
+
+const readStream = fs.createReadStream("./example3.txt.gz");
+const writeStream = fs.createWriteStream("example4.txt");
+
+const gunzip = zlib.createGunzip()
+
+readStream.pipe(gunzip).pipe(writeStream)
